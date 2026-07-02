@@ -34,7 +34,6 @@ limitations under the License.
 #include "absl/strings/string_view.h"
 #include "jpeglib.h"  // from @libjpeg_turbo
 #include "tensorflow/core/lib/jpeg/jpeg_mem.h"
-#include "tensorflow/core/platform/logging.h"
 #include "tflite/c/c_api_types.h"
 #include "tflite/c/common.h"
 #include "tflite/kernels/internal/reference/pad.h"
@@ -42,7 +41,6 @@ limitations under the License.
 #include "tflite/kernels/internal/runtime_shape.h"
 #include "tflite/kernels/internal/types.h"
 #include "tflite/profiling/time.h"
-#include "tflite/string_type.h"
 #include "tflite/tools/evaluation/proto/evaluation_config.pb.h"
 #include "tflite/tools/evaluation/proto/evaluation_stages.pb.h"
 #include "tflite/tools/evaluation/proto/preprocessing_steps.pb.h"
@@ -433,7 +431,8 @@ TfLiteStatus ImagePreprocessingStage::Run() {
           // Only validate against the target size if this is the last sizing
           // step in the preprocessing chain.
           if (image_data.data.size() !=
-              param.cropping_params().target_size().width() *
+              static_cast<size_t>(
+                  param.cropping_params().target_size().width()) *
                   param.cropping_params().target_size().height() *
                   kNumChannels) {
             LOG(ERROR)
@@ -453,7 +452,8 @@ TfLiteStatus ImagePreprocessingStage::Run() {
           // Only validate against the target size if this is the last sizing
           // step in the preprocessing chain.
           if (image_data.data.size() !=
-              param.resizing_params().target_size().width() *
+              static_cast<size_t>(
+                  param.resizing_params().target_size().width()) *
                   param.resizing_params().target_size().height() *
                   kNumChannels) {
             LOG(ERROR)
@@ -474,7 +474,8 @@ TfLiteStatus ImagePreprocessingStage::Run() {
           // Only validate against the target size if this is the last sizing
           // step in the preprocessing chain.
           if (image_data.data.size() !=
-              param.padding_params().target_size().width() *
+              static_cast<size_t>(
+                  param.padding_params().target_size().width()) *
                   param.padding_params().target_size().height() *
                   kNumChannels) {
             LOG(ERROR)
