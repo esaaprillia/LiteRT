@@ -575,7 +575,6 @@ if(TFLITE_ENABLE_XNNPACK)
   target_link_libraries(xnnpack-delegate
     Eigen3::Eigen
     absl::span
-    flatbuffers::flatbuffers
     gemmlowp::gemmlowp
     ruy::ruy
     ${XNNPACK_NEON_2_SSE}
@@ -767,7 +766,6 @@ target_link_libraries(tensorflow-lite
     absl::variant
     farmhash
     fft2d_fftsg2d
-    flatbuffers::flatbuffers
     gemmlowp::gemmlowp
     ml_dtypes
     ruy::ruy
